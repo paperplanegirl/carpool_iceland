@@ -1,5 +1,5 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
+'use strict'
+module.exports = function (sequelize, DataTypes) {
   var rides = sequelize.define('rides', {
     Requesting: DataTypes.STRING,
     From: DataTypes.STRING,
@@ -13,10 +13,22 @@ module.exports = function(sequelize, DataTypes) {
     Notes: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function (models) {
         // associations can be defined here
       }
+    }, instanceMethods: {
+      validPassword: function (password) {
+        // return if the password matches the hash
+        return bcrypt.compareSync(password, this.password)
+      },
+      toJSON: function () {
+        // get the user's JSON data
+        var jsonUser = this.get()
+        // delete the password from the JSON data, and return
+        delete jsonUser.password
+        return jsonUser
+      }
     }
-  });
-  return rides;
-};
+  })
+  return rides
+}
