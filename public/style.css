@@ -1,0 +1,21 @@
+body {
+    min-height: 2000px;
+}
+
+/*.navbar-static-top {
+  margin-bottom: 50px;
+}*/
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.bkg {
+  margin: 0 auto;
+  width: 100%
+}
+
+
+.navbar-default {
+    background-color: #000000;
+}

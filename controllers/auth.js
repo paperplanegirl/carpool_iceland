@@ -9,13 +9,20 @@ router.get('/signup', function (req, res) {
 
 router.post('/signup', function (req, res) {
   // try sending back the form data
+  console.log('signing up');
   db.user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: req.body.password
+      email: req.body.email,
+      age: req.body.age,
+      gender: req.body.gender,
+      country: req.body.country2,
+      password: req.body.password,
+      password1: req.body.password1
     }
+
   }).spread(function (user, created) {
     if (created) {
       // if created, success and redirect home
@@ -46,6 +53,8 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: 'Invalid username and/or password',
   successFlash: 'You have logged in'
 }))
+
+
 
 router.get('/logout', function (req, res) {
   req.logout()

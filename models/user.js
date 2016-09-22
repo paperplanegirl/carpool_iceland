@@ -29,7 +29,43 @@ module.exports = function (sequelize, DataTypes) {
         }
       }
     },
+    age: {
+      type: DataTypes.INTEGER,
+      validate: {
+        len: {
+          args: [1, 99],
+          msg: ''
+        }
+      }
+    },
+    gender: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1, 99],
+          msg: 'gender must be either male or female'
+        }
+      }
+    },
+    country: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1, 99],
+          msg: 'Name must be between 1 and 99 characters'
+        }
+      }
+    },
     password: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [8, 99],
+          msg: 'Password must be between 8 and 99 characters'
+        }
+      }
+    },
+    password1: {
       type: DataTypes.STRING,
       validate: {
         len: {
@@ -48,6 +84,22 @@ module.exports = function (sequelize, DataTypes) {
         // continue to save the user, with no errors
         cb(null, createdUser)
       }
+      // beforeCreate: function (createdUser, options, cb) {
+      //   // hash the password
+      //   var hash = bcrypt.hashSync(createdUser.password1, 10)
+      //   // store the hash as the user's password
+      //   createdUser.password1 = hash
+      //   // continue to save the user, with no errors
+      //   cb(null, createdUser)
+      // },
+      // beforeUpdate: function(updatedUser, option,cb) {
+      // if (updatedUser.changed('password') ) {
+      //
+      // var hash = bcrypt.hashSync(updatedUser.password, 10);
+      // updatedUser.password = hash;
+      // }
+      // cb(null, updatedUser);
+      // }
     },
     classMethods: {
       associate: function (models) {
