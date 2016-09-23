@@ -1,13 +1,13 @@
-$("#loginform").submit(function(event) {
-  event.preventDefault()
-  var data = {}
-  data.email = $("#email").val()
-  data.password = $("#login-password").val()
+// $("#loginform").submit(function(event) {
+//   event.preventDefault()
+//   var data = {}
+//   data.email = $("#email").val()
+//   data.password = $("#login-password").val()
+//
+//   $.post('/auth/signup', data)
+// })
 
-  $.post('/auth/signup', data)
-})
-
-
+//
 // $("#signupform").submit(function(event) {
 //   event.preventDefault()
 //   var data = {}
@@ -18,5 +18,5 @@ $("#loginform").submit(function(event) {
 //   data.gender = $("#email").val()
 //   data.country = $("#country2").val()
 //   data.password = $("#password").val()
-//   $.post('/auth/signup', data)
+//   $.post('/auth/thisisatest', data)
 // })

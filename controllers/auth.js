@@ -9,7 +9,6 @@ router.get('/signup', function (req, res) {
 
 router.post('/signup', function (req, res) {
   // try sending back the form data
-  console.log('signing up');
   db.user.findOrCreate({
     where: { email: req.body.email },
     defaults: {
@@ -19,11 +18,11 @@ router.post('/signup', function (req, res) {
       age: req.body.age,
       gender: req.body.gender,
       country: req.body.country2,
-      password: req.body.password,
-      password1: req.body.password1
+      password: req.body.password
     }
 
   }).spread(function (user, created) {
+    console.log('#user created',user)
     if (created) {
       // if created, success and redirect home
       // FLASH
@@ -48,7 +47,7 @@ router.get('/login', function (req, res) {
 })
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
+  successRedirect: '/rides/new',
   failureRedirect: '/auth/login',
   failureFlash: 'Invalid username and/or password',
   successFlash: 'You have logged in'

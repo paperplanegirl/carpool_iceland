@@ -15,6 +15,7 @@ var db = require('../models');
  * user to an identifier (id)
  */
 passport.serializeUser(function(user, cb) {
+  console.log('#serialize: ', user.id)
   cb(null, user.id);
 });
 

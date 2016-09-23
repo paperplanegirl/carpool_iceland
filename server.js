@@ -9,6 +9,9 @@ var flash = require('connect-flash')
 var isLoggedIn = require('./middleware/isLoggedIn')
 var app = express()
 
+app.set('view engine', 'ejs')
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static('public'))
 app.use(ejsLayouts)
 
 app.use(session({
@@ -19,11 +22,8 @@ app.use(session({
 
 // 2. INSTANTIATING THE APP
 // configure app to use ejs for template
-app.set('view engine', 'ejs')
 
-app.use(express.static('public'))
 
-app.use(bodyParser.urlencoded({extended: true}))
 // app.use(express.static('public'))
 
 // INITIALIZE THE PASSPORT CONFIGURATION AND SESSION AS MIDDLEWARE
@@ -31,44 +31,52 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
-app.use(function (req, res, next) {
-  // before every route, attach the flash messages and current user to res.locals
-  res.locals.alerts = req.flash()
-  res.locals.currentUser = req.user
-  next()
-})
-
-
-// app.get('/auth/login', isLoggedIn, function (req, res) {
-//   res.render('login')
+// app.use(function (req, res, next) {
+//   // before every route, attach the flash messages and current user to res.locals
+//   res.locals.alerts = req.flash()
+//   res.locals.currentUser = req.user
+//   // console.log('#test:', req.user )
+//   next()
 // })
-//
-// var isLoggedIn = function (req, res, next) {
-//   if (!req.user) {
-//     req.flash('error', 'You must be logged in to access that page')
-//     res.redirect('/auth/login')
-//   } else {
-//     next()
-//   }
-// }
+
+app.use( function(req, res, next) {
+ if(req.session.passport){
+   res.locals.currentUser = req.user
+ }
+ next()
+});
+
+// app.get('/auth/login', isLoggedIn, function
+// (req,res) { res.render('index',{firstName:req.user.firstName});
+// })
+
+var isLoggedIn = function (req, res, next) {
+  if (!req.user) {
+    req.flash('error', 'You must be logged in to access that page')
+    res.redirect('/auth/login')
+  } else {
+    next()
+  }
+}
+
 
 app.get('/user', function (req, res) {
   // res.send('hello server is up')
-  res.render('auth/login', {name: 'Carpooling in Iceland'})
+  res.render('auth/signup', {name: 'Carpooling in Iceland'})
 })
 
-app.get('/user', function(req, res) {
-
-db.user.find({where: {email: email1}}).then(function(user){
-       user.update({
-           password: password1
-       }).then(function() {
-           req.flash('success', 'Password Changed');
-           res.redirect('/');
-       })
-     })
-  res.render('auth/passwordreset')
-})
+// app.get('/user', function(req, res) {
+//
+// db.user.find({where: {email: email1}}).then(function(user){
+//        user.update({
+//            password: password1
+//        }).then(function() {
+//            req.flash('success', 'Password Changed');
+//            res.redirect('/');
+//        })
+//      })
+//   res.render('auth/passwordreset')
+// })
 
 
 app.post('/user', function (req, res) {
@@ -85,7 +93,9 @@ app.post('/user', function (req, res) {
 })
 
 
-
+app.get('/profile', function(req, res) {
+  res.send(req.session.user.firstName);
+})
 
 
 
@@ -107,18 +117,23 @@ app.get('/', function (req, res) {
 
 
 app.get('/rides', function (req, res) {
-  db.rides.findAll().then(function (data) {
-    res.json(data)
-  })
+  res.json(data);
 })
 
-// READ: GET ONE
-app.get('/rides/:id', function (req, res) {
-  db.rides.find({
-    where: {id: req.params.id}
-  }).then(function (data) {
-    res.json(data)
-  })
+// app.get('/user/rides/edit', function(req, res){
+//   db.rides.findAll().then(function(data) {
+//     res.json(data)
+//   })
+// })
+
+app.get('/rides/new', function(req, res) {
+  console.log("new rides")
+  res.render('new-ride-form')
+})
+
+app.get('/rides/new', function(req, res) {
+  console.log("log out success")
+  res.render('/auth/logout')
 })
 
 app.post('/rides', function (req, res) {
@@ -140,11 +155,18 @@ app.post('/rides', function (req, res) {
   })
 })
 
-// app.get('/user/rides/edit', function(req, res){
-//   db.rides.findAll().then(function(data) {
-//     res.json(data)
-//   })
-// })
+
+
+// READ: GET ONE
+app.get('/rides/:id', function (req, res) {
+  console.log("show rides")
+  db.rides.find({
+    where: {id: req.params.id}
+  }).then(function (data) {
+    res.json(data)
+  })
+})
+
 
 app.get('/rides/:id/edit', function (req, res) {
   db.rides.find({
@@ -153,6 +175,27 @@ app.get('/rides/:id/edit', function (req, res) {
     res.json(data)
   })
 })
+
+app.post('/rides/create', isLoggedIn, function(req, res) {
+  console.log("#req.body:  ", req.body);
+  console.log("#req.user: ", req.user.id);
+  db.ride.create({
+    Requesting: req.body.Requesting,
+    From: req.body.From,
+    To: req.body.To,
+    Date: req.body.Date,
+    Time: req.body.Time,
+    Seats: req.body.Seats,
+    Mobile: req.body.Mobile,
+    NonSmokeCar: req.body.NonSmokeCar,
+    Notes: req.body.Notes,
+    userID: req.user.id
+  }).then(function(data){
+    res.render('rides',{ ride: data });
+    // res.redirect('/rides',{ ride: data});
+  })
+})
+
 
 app.put('/rides/:id', function (req, res) {
   var updateRide = {
@@ -172,7 +215,7 @@ app.put('/rides/:id', function (req, res) {
       id: req.params.id
     }
   }).then(function (ride) {})
-  res.json(updateRide)
+  res.render('rides-edit')
 })
 
 // DELETE

@@ -65,33 +65,26 @@ module.exports = function (sequelize, DataTypes) {
         }
       }
     },
-    password1: {
-      type: DataTypes.STRING,
-      validate: {
-        len: {
-          args: [8, 99],
-          msg: 'Password must be between 8 and 99 characters'
-        }
-      }
-    }
+    // userID: {
+    //   type: DataTypes.INTEGER,
+    //   validate: {
+    //     len: {
+    //       args: [8, 99],
+    //       msg: 'Password must be between 8 and 99 characters'
+    //     }
+    //   }
+    // }
   }, {
     hooks: {
-      beforeCreate: function (createdUser, options, cb) {
+      beforeCreate: function (createdUser) {
         // hash the password
         var hash = bcrypt.hashSync(createdUser.password, 10)
         // store the hash as the user's password
         createdUser.password = hash
         // continue to save the user, with no errors
-        cb(null, createdUser)
-      }
-      // beforeCreate: function (createdUser, options, cb) {
-      //   // hash the password
-      //   var hash = bcrypt.hashSync(createdUser.password1, 10)
-      //   // store the hash as the user's password
-      //   createdUser.password1 = hash
-      //   // continue to save the user, with no errors
-      //   cb(null, createdUser)
-      // },
+
+      },
+
       // beforeUpdate: function(updatedUser, option,cb) {
       // if (updatedUser.changed('password') ) {
       //
