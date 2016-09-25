@@ -46,6 +46,10 @@ router.get('/login', function (req, res) {
   res.render('auth/login')
 })
 
+router.get('/profile', function(req, res){
+  res.render('profile', { username: req.user.firstName });
+});
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/rides/new',
   failureRedirect: '/auth/login',

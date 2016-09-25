@@ -131,10 +131,16 @@ app.get('/rides/new', function(req, res) {
   res.render('new-ride-form')
 })
 
-app.get('/rides/new', function(req, res) {
+app.get('/logout', function(req, res) {
   console.log("log out success")
   res.render('/auth/logout')
 })
+
+// app.get('/logout', function(req, res){
+//   req.logout();
+//   res.redirect('/');
+// });
+
 
 app.post('/rides', function (req, res) {
   var newRide = {
