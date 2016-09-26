@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RideJoy</title>
+</head>
+<body>
+  <h1>All Rides</h1>
+  <div class="allRides">
+    <%if (ride) { %>
+    <% for(var i = 0; i < ride.length; i++) { %>
+    <% var currentride = ride[i]; %>
+    <div>
+    <p>
+      Name: <%= currentUser.firstName %><br>
+      Email: <%= currentUser.email %><br>
+      Requesting: <%= currentride.Requesting %><br>
+      From: <%= currentride.From %><br>
+      To: <%= currentride.To %><br>
+      Date: <%= currentride.Date %><br>
+      Time: <%= currentride.Time %><br>
+      Mobile: <%= currentride.Mobile %><br>
+      Number of Seats: <%= currentride.Seats %><br>
+      Non-Smoke Car: <%= currentride.NonSmokeCar %><br>
+      Notes: <%= currentride.Notes %><br>
+      <a href="#">edit</a>
+    </p>
+</div>
+<% } %>
+<% } %>
+</div>
+</body>
+</html>

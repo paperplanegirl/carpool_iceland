@@ -45,9 +45,9 @@ app.use( function(req, res, next) {
  }
  next()
 });
-
-// app.get('/auth/login', isLoggedIn, function
-// (req,res) { res.render('index',{firstName:req.user.firstName});
+//
+// app.get('/auth/login', isLoggedIn, function (req,res) {
+  // res.render('index',{firstName:req.user.firstName});
 // })
 
 var isLoggedIn = function (req, res, next) {
@@ -92,10 +92,28 @@ app.post('/user', function (req, res) {
   })
 })
 
+// app.get('/profile', isLoggedIn, function(req, res) {
+//   res.render('profile', {ride: null});
+// })
 
-app.get('/profile', function(req, res) {
-  res.send(req.session.user.firstName);
-})
+
+app.get('/profile', isLoggedIn, function(req, res) {
+db.user.find({
+  where:req.session.passport.user
+}).then(function(user) {
+  db.ride.findAll( {
+  where: {
+    userID:req.user.id
+  }
+}).then(function(ride) {
+  console.log("Rides are");
+  res.render('profile', {
+    user: user,
+    ride: ride
+      });
+    });
+  });
+});
 
 
 
@@ -116,9 +134,10 @@ app.get('/', function (req, res) {
 })
 
 
-app.get('/rides', function (req, res) {
-  res.json(data);
-})
+
+// app.get('/rides', isLoggedIn, function (req, res) {
+//   res.render('');
+// })
 
 // app.get('/user/rides/edit', function(req, res){
 //   db.rides.findAll().then(function(data) {
@@ -197,7 +216,7 @@ app.post('/rides/create', isLoggedIn, function(req, res) {
     Notes: req.body.Notes,
     userID: req.user.id
   }).then(function(data){
-    res.render('rides',{ ride: data });
+    res.redirect('/profile');
     // res.redirect('/rides',{ ride: data});
   })
 })

@@ -8,7 +8,6 @@ module.exports = function (sequelize, DataTypes) {
     Time: DataTypes.TIME,
     Seats: DataTypes.INTEGER,
     Mobile: DataTypes.INTEGER,
-    Email: DataTypes.STRING,
     NonSmokeCar: DataTypes.BOOLEAN,
     Notes: DataTypes.STRING,
     userID: DataTypes.INTEGER

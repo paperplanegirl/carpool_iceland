@@ -7,6 +7,10 @@
 <body>
   <h1>All Rides</h1>
   <div class="allRides">
+    if (ride) { %>
+    <% for(var i = 0; i < ride.length; i++) { %>
+    <% var ride = ride[i]; %>
+    <div>
     <p>
       Name: <%= currentUser.firstName %><br>
       Email: <%= currentUser.email %><br>
@@ -20,6 +24,9 @@
       Non-Smoke Car: <%= ride.NonSmokeCar %><br>
       Notes: <%= ride.Notes %><br>
     </p>
+</div>
+<% } %>
+<% } %>
 </div>
 </body>
 </html>
