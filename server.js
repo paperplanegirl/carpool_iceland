@@ -11,6 +11,8 @@ var app = express()
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
+// declare which folder is static
+// files that get sent out together when a page is rendered
 app.use(express.static('public'))
 app.use(ejsLayouts)
 
@@ -150,10 +152,19 @@ app.get('/rides/new', function(req, res) {
   res.render('new-ride-form')
 })
 
-app.get('/logout', function(req, res) {
-  console.log("log out success")
-  res.render('/auth/logout')
+// app.get('/logout', function(req, res) {
+//   console.log("log out success")
+//   res.render('/auth/logout')
+// })
+
+// for edit
+app.get('/rides-edit/:id', function(req, res) {
+  db.ride.findById(req.params.id).then(function(data) {
+    console.log("hello this is now the data: ", {data:data});
+  res.render('rides-edit', {data:data});
 })
+})
+
 
 // app.get('/logout', function(req, res){
 //   req.logout();
@@ -161,45 +172,45 @@ app.get('/logout', function(req, res) {
 // });
 
 
-app.post('/rides', function (req, res) {
-  var newRide = {
-    Requesting: req.body.Requesting,
-    From: req.body.From,
-    To: req.body.To,
-    Date: req.body.Date,
-    Time: req.body.Time,
-    Seats: req.body.Seats,
-    Mobile: req.body.Mobile,
-    Email: req.body.Email,
-    NonSmokeCar: req.body.NonSmokeCar,
-    Notes: req.body.Notes
-  }
-
-  db.rides.create(newRide).then(function (data) {
-    res.json(data)
-  })
-})
+// app.post('/rides', function (req, res) {
+//   var newRide = {
+//     Requesting: req.body.Requesting,
+//     From: req.body.From,
+//     To: req.body.To,
+//     Date: req.body.Date,
+//     Time: req.body.Time,
+//     Seats: req.body.Seats,
+//     Mobile: req.body.Mobile,
+//     Email: req.body.Email,
+//     NonSmokeCar: req.body.NonSmokeCar,
+//     Notes: req.body.Notes
+//   }
+//
+//   db.rides.create(newRide).then(function (data) {
+//     res.json(data)
+//   })
+// })
 
 
 
 // READ: GET ONE
-app.get('/rides/:id', function (req, res) {
-  console.log("show rides")
-  db.rides.find({
-    where: {id: req.params.id}
-  }).then(function (data) {
-    res.json(data)
-  })
-})
-
-
-app.get('/rides/:id/edit', function (req, res) {
-  db.rides.find({
-    where: {id: req.params.id}
-  }).then(function (data) {
-    res.json(data)
-  })
-})
+// app.get('/rides/:id', function (req, res) {
+//   console.log("show rides")
+//   db.rides.find({
+//     where: {id: req.params.id}
+//   }).then(function (data) {
+//     res.json(data)
+//   })
+// })
+//
+//
+// app.get('/rides/:id/edit', function (req, res) {
+//   db.rides.find({
+//     where: {id: req.params.id}
+//   }).then(function (data) {
+//     res.json(data)
+//   })
+// })
 
 app.post('/rides/create', isLoggedIn, function(req, res) {
   console.log("#req.body:  ", req.body);
@@ -222,7 +233,7 @@ app.post('/rides/create', isLoggedIn, function(req, res) {
 })
 
 
-app.put('/rides/:id', function (req, res) {
+app.post('/rides-edit/:id', function (req, res) {
   var updateRide = {
     Requesting: req.body.Requesting,
     From: req.body.From,
@@ -235,13 +246,15 @@ app.put('/rides/:id', function (req, res) {
     Notes: req.body.Notes
   }
 
-  db.rides.update(updateRide, {
+  db.ride.update(updateRide, {
     where: {
       id: req.params.id
     }
-  }).then(function (ride) {})
-  res.render('rides-edit')
-})
+  }).then(function(ride) {
+    res.redirect('/profile')
+  });
+});
+
 
 // DELETE
 app.delete('/rides/:id', function (req, res) {

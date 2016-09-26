@@ -1,21 +1,266 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>RideJoy</title>
-</head>
-<body>
-  <h1>All Rides</h1>
-  <div class="allRides">
-    <p>
-      Requesting: <%= ride.Requesting %><br> From: <%= ride.From %><br>
-      To: <%= ride.To %><br>
-      Date: <%= ride.Date %><br>
-      Time: <%= ride.Time %><br>
-      Number of Seats: <%= ride.Seats %><br> Mobile: <%= ride.Mobile %><br>
-      Email: <%= ride.Email %><br>
-      Non-Smoke Car: <%= ride.NonSmokeCar %><br> Notes: <%= ride.Notes %><br>
-    </p>
+<div id="newridebox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <div class="panel-title">Update Ride</div>
+      <div style="float:right; font-size: 85%; position: relative; top:-10px"></div>
+    </div>
+    <div class="panel-body" >
+      <form id="updaterideform" class="form-horizontal" role="form" action="/rides-edit/<%= data.id %>"  method="POST"  data-toggle="validator">
+        <div id="newformalert" style="display:none" class="alert alert-danger">
+        </div>
+
+        <div class="form-group">
+          <label for="Requesting" class="col-md-3 control-label">Requesting</label>
+          <div class="col-md-9">
+            <select class="form-control" name="Requesting" value=" <%= data.Requesting %>" id="requestride">
+              <option value=""selected disabled>Rides or Passengers</option>
+              <option>Rides</option>
+              <option>Passengers</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="From" class="col-md-3 control-label">From</label>
+          <div class="col-md-9">
+            <select class="form-control" name="From" value=" <%= data.From %>" id="sel1">
+              <option value=""selected disabled>Location</option>
+              <option>Akranes</option>
+              <option>Akureyri</option>
+              <option>Árskógsströnd/Hrísey</option>
+              <option>Ísafjörður</option>
+              <option>Ólafsfjörður</option>
+              <option>Ólafsvík</option>
+              <option>Ögur í Ísafjarðardjúpi</option>
+              <option>Þórshöfn</option>
+              <option>Þingeyri</option>
+              <option>Þorlákshöfn</option>
+              <option>Bakkafjörður</option>
+              <option>Bíldudalur</option>
+              <option>Búðardalur</option>
+              <option>Bifröst</option>
+              <option>Blönduós</option>
+              <option>Bolungarvík</option>
+              <option>Borgarfjörður</option>
+              <option>Borgarnes</option>
+              <option>Breiðdalsvík</option>
+              <option>Dalvík</option>
+              <option>Djúpivogur</option>
+              <option>Drangsnes</option>
+              <option>Egilsstaðir</option>
+              <option>Eskifjörður</option>
+              <option>Eyrarbakki</option>
+              <option>Fáskrúðsfjörður</option>
+              <option>Flateyri</option>
+              <option>Flúðir</option>
+              <option>Garðabær</option>
+              <option>Garður</option>
+              <option>Grenivík</option>
+              <option>Grindavík</option>
+              <option>Grundarfjörður</option>
+              <option>Hafnarfjörður</option>
+              <option>Hólmavík</option>
+              <option>Höfn</option>
+              <option>Húsavík</option>
+              <option>Heitar laugar á Íslandi</option>
+              <option>Hella</option>
+              <option>Hellissandur</option>
+              <option>Hofsós</option>
+              <option>Hvammstangi</option>
+              <option>Hvanneyri</option>
+              <option>Hveragerði</option>
+              <option>Hvolsvöllur</option>
+              <option>Kárahnjúkar</option>
+              <option>Kópasker</option>
+              <option>Kópavogur</option>
+              <option>Keflavík</option>
+              <option>Keflavík (Airport)</option>
+              <option>Keilissvæðið</option>
+              <option>Kirkjubæjarklaustur</option>
+              <option>Landeyjahöfn</option>
+              <option>Landmannalaugar</option>
+              <option>Laugar</option>
+              <option>Laugarvatn</option>
+              <option>Mývatn</option>
+              <option>Mjóifjörður</option>
+              <option>Mosfellsbær</option>
+              <option>Neskaupstaður</option>
+              <option>Patreksfjörður</option>
+              <option>Raufarhöfn</option>
+              <option>Reyðarfjörður</option>
+              <option>Reykhólar</option>
+              <option>Reykholt</option>
+              <option>Reykjanesbær</option>
+              <option>Reykjavík</option>
+              <option>Sandgerði</option>
+              <option>Sauðárkrókur</option>
+              <option>Súðavík</option>
+              <option>Selfoss</option>
+              <option>Seyðisfjörður</option>
+              <option>Siglufjörður</option>
+              <option>Skagaströnd</option>
+              <option>Staður</option>
+              <option>Stöðvarfjörður</option>
+              <option>Stokkseyri</option>
+              <option>Stykkishólmur</option>
+              <option>Suðureyri</option>
+              <option>Tálknafjörður</option>
+              <option>Varmahlíð</option>
+              <option>Vík</option>
+              <option>Vestmannaeyjar</option>
+              <option>Vogar</option>
+              <option>Vopnafjörður</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="To" class="col-md-3 control-label">To</label>
+          <div class="col-md-9">
+            <select class="form-control" name="To" value=" <%= data.To %>" id="sel2">
+              <option value=""selected disabled>Location</option>
+              <option>Akranes</option>
+              <option>Akureyri</option>
+              <option>Árskógsströnd/Hrísey</option>
+              <option>Ísafjörður</option>
+              <option>Ólafsfjörður</option>
+              <option>Ólafsvík</option>
+              <option>Ögur í Ísafjarðardjúpi</option>
+              <option>Þórshöfn</option>
+              <option>Þingeyri</option>
+              <option>Þorlákshöfn</option>
+              <option>Bakkafjörður</option>
+              <option>Bíldudalur</option>
+              <option>Búðardalur</option>
+              <option>Bifröst</option>
+              <option>Blönduós</option>
+              <option>Bolungarvík</option>
+              <option>Borgarfjörður</option>
+              <option>Borgarnes</option>
+              <option>Breiðdalsvík</option>
+              <option>Dalvík</option>
+              <option>Djúpivogur</option>
+              <option>Drangsnes</option>
+              <option>Egilsstaðir</option>
+              <option>Eskifjörður</option>
+              <option>Eyrarbakki</option>
+              <option>Fáskrúðsfjörður</option>
+              <option>Flateyri</option>
+              <option>Flúðir</option>
+              <option>Garðabær</option>
+              <option>Garður</option>
+              <option>Grenivík</option>
+              <option>Grindavík</option>
+              <option>Grundarfjörður</option>
+              <option>Hafnarfjörður</option>
+              <option>Hólmavík</option>
+              <option>Höfn</option>
+              <option>Húsavík</option>
+              <option>Heitar laugar á Íslandi</option>
+              <option>Hella</option>
+              <option>Hellissandur</option>
+              <option>Hofsós</option>
+              <option>Hvammstangi</option>
+              <option>Hvanneyri</option>
+              <option>Hveragerði</option>
+              <option>Hvolsvöllur</option>
+              <option>Kárahnjúkar</option>
+              <option>Kópasker</option>
+              <option>Kópavogur</option>
+              <option>Keflavík</option>
+              <option>Keflavík (Airport)</option>
+              <option>Keilissvæðið</option>
+              <option>Kirkjubæjarklaustur</option>
+              <option>Landeyjahöfn</option>
+              <option>Landmannalaugar</option>
+              <option>Laugar</option>
+              <option>Laugarvatn</option>
+              <option>Mývatn</option>
+              <option>Mjóifjörður</option>
+              <option>Mosfellsbær</option>
+              <option>Neskaupstaður</option>
+              <option>Patreksfjörður</option>
+              <option>Raufarhöfn</option>
+              <option>Reyðarfjörður</option>
+              <option>Reykhólar</option>
+              <option>Reykholt</option>
+              <option>Reykjanesbær</option>
+              <option>Reykjavík</option>
+              <option>Sandgerði</option>
+              <option>Sauðárkrókur</option>
+              <option>Súðavík</option>
+              <option>Selfoss</option>
+              <option>Seyðisfjörður</option>
+              <option>Siglufjörður</option>
+              <option>Skagaströnd</option>
+              <option>Staður</option>
+              <option>Stöðvarfjörður</option>
+              <option>Stokkseyri</option>
+              <option>Stykkishólmur</option>
+              <option>Suðureyri</option>
+              <option>Tálknafjörður</option>
+              <option>Varmahlíð</option>
+              <option>Vík</option>
+              <option>Vestmannaeyjar</option>
+              <option>Vogar</option>
+              <option>Vopnafjörður</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Date" class="col-md-3 control-label">Date</label>
+          <div class="col-md-9">
+            <input type="Date" class="form-control" name="Date" value=" <%= data.Date %>" placeholder="Date">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="Time" class="col-md-3 control-label">Time</label>
+          <div class="col-md-9">
+            <input type="Time" class="form-control" name="Time" value=" <%= data.Time %>" placeholder="Time">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Seats" class="col-md-3 control-label">Seats</label>
+          <div class="col-md-9">
+            <input type="number" class="form-control" name="Seats" value=" <%= data.Seats %>" placeholder="Seats Number">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Mobile" class="col-md-3 control-label">Mobile</label>
+          <div class="col-md-9">
+            <input type="number" class="form-control" name="Mobile" value=" <%= data.Mobile %>" placeholder="Mobile">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="NonSmokeCar" class="col-md-3 control-label">Non-Smoking Car</label>
+          <div class="col-md-9">
+            <select class="form-control" name="NonSmokeCar" value=" <%= data.NonSmokeCar %>" placeholder="Non-Smoking Car">
+              <option value=""selected disabled>Yes or No</option>
+              <option value=true >Yes</option>
+              <option value=false >No</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Notes" class="col-md-3 control-label">Notes</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" name="Notes" value=" <%= data.Notes %>" placeholder="Notes">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-offset-3 col-md-9">
+            <input id="btn-updateride" type="submit" class="btn btn-info"><i class="icon-hand-right"></i></input>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-</body>
-</html> -->
