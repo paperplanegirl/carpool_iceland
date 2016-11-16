@@ -2,20 +2,43 @@ body {
     min-height: 2000px;
 }
 
-/*.navbar-static-top {
-  margin-bottom: 50px;
-}*/
-
-.navbar {
-  margin-bottom: 0px;
+.navbar.navbar-default.navbar-static-top {
+  margin-bottom: 0;
+  background: black;
+  border-width: 0;
 }
 
 .bkg {
   margin: 0 auto;
-  width: 100%
+  width: 100%;
+  filter:opacity(75%);
 }
 
+li {
+  font-size: 18px;
+}
 
-.navbar-default {
-    background-color: #000000;
+.index-container {
+  text-align: center;
+  margin-top: -650px;
+  font-family: 'Lobster', cursive;
+}
+
+.login-container {
+  text-align: center;
+  margin-top: -650px;
+  font-family: 'Lobster', cursive;
+}
+
+.signup-container {
+  text-align: center;
+  margin-top: -700px;
+  font-family: 'Lobster', cursive;
+}
+
+.newride-container {
+  text-align: center;
+  margin-top: -700px;
+  font-family: 'Lobster', cursive;
+
 }

@@ -7,6 +7,7 @@ var session = require('express-session')
 var passport = require('./config/ppConfig')
 var flash = require('connect-flash')
 var isLoggedIn = require('./middleware/isLoggedIn')
+var methodOverride = require('method-override')
 var app = express()
 
 app.set('view engine', 'ejs')
@@ -255,17 +256,25 @@ app.post('/rides-edit/:id', function (req, res) {
   });
 });
 
-
 // DELETE
-app.delete('/rides/:id', function (req, res) {
-  // remove the rides from the object
-  db.rides.destroy({
+app.delete('/profile', function (req, res) {
+  var removeRide = {
+    Requesting: req.body.Requesting,
+    From: req.body.From,
+    To: req.body.To,
+    Date: req.body.Date,
+    Time: req.body.Time,
+    Seats: req.body.Seats,
+    Mobile: req.body.Mobile,
+    NonSmokeCar: req.body.NonSmokeCar,
+    Notes: req.body.Notes
+  }
+  db.ride.destroy(removeRide, {
     where: {
       id: req.params.id
     }
   }).then(function () {
-    // res.render('index')
-    res.json('ride id(' + req.params.id + ') deleted')
+    res.redirect('/profile')
   })
 })
 

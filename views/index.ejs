@@ -4,8 +4,14 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="style.css">
     <%- contentFor('body') %>
-    <img class = "bkg" src="img/icelandwallpaper.jpg">
+  </head>
+  <body>
+    <div class="index-container">
     <h1><%= name %></h1>
+    <h3>In Iceland there are more cars then people so there must be someone else going to the same destination as you - every single day.</h3>
+    <h3>Going somewhere?</h3>
+    <p>It does not matter if you are going from Reykjavik to Akureyri or anywhere else - RideJoy will help you get in touch with somebody else that are going the same way. <a href="/rides/new">Submit your request</a> and hope for the best.</p>
+
     <div class="col-xs-2">
       <label for="sel1">From:</label>
       <select class="form-control" id="sel1">
@@ -191,8 +197,6 @@
       <label for="sel1">""</label>
       <button type="button" class="btn btn-info">Search</button>
     </div>
-
-  </head>
-  <body>
+  </div>
   </body>
 </html>

@@ -24,6 +24,10 @@
       Non-Smoke Car: <%= currentride.NonSmokeCar %><br>
       Notes: <%= currentride.Notes %><br>
       <a href="/rides-edit/<%= currentride.id %>">edit</a>
+      <form action="/profile?_method=DELETE" method="POST">
+      <button type="button">Delete</button>
+      </form>
+
     </p>
 </div>
 <% } %>
